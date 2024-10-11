@@ -1,7 +1,4 @@
 heme: minima
-layout: page
-title: "problems_in_dealing_with_deep_learning_models"
-permalink: /deep_learning_models/problems
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
