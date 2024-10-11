@@ -1,5 +1,5 @@
 ---
-Title: StackAndQueue 02
+Title: StackAndQueue02
 Date: 2024-10-10
 ---
 # 代码随想录算法训练营第十天 | 150. 逆波兰表达式求值 | 239. 滑动窗口最大值 | 347.前 K 个高频元素
