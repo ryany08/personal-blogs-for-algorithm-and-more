@@ -17,6 +17,35 @@ Date: 2024-10-24
 同时注意，本题中集合元素出现重复元素，求非重复组合（子集）的一般方法是排序后判断相邻相同元素是否出现在回溯输的同一层。而本题无法排序，因此需要一个集合记录每一树层使用的元素。
 ### 代码
 ～～～c++
+class Solution {
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+    void backtracking(vector<int>& nums, int start){
+        if(path.size() >= 2){
+            res.push_back(path);
+            if(start == nums.size()){
+                return;                
+            }
+        }
+        unordered_set<int> uset; // can not be sorted, and it is a combination problem
+        for(int i = start; i < nums.size(); i++){
+            if ((!path.empty() && nums[i] < path.back())
+                    || uset.find(nums[i]) != uset.end()) {
+                    continue;
+            }
+            uset.insert(nums[i]);
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        backtracking(nums, 0);
+        return res;
+    }
+};
 ～～～
 ## 46.全排列
 排列与组合问题不同点在于：**组合与顺序无关，排列与顺序有关**，统一组合的不同排序就是排列
@@ -30,6 +59,34 @@ Date: 2024-10-24
 本题不存在重复的元素，因此**只需要判断是否使用过这个元素**
 ### 代码
 ～～～c++
+lass Solution {
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+public:
+    void traverse(vector<int>& nums, vector<bool>& used) {
+        if (path.size() == nums.size()) {
+            res.push_back(path);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++) {
+            if (used[i]) {
+                continue;
+            }
+            path.push_back(nums[i]);
+            used[i] = true;
+            traverse(nums, used);
+            used[i] = false;
+            path.pop_back();
+        }
+        return;
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<bool> used(nums.size(), false);
+        traverse(nums, used);
+        return res;
+    }
+};
 ～～～
 ## 47.全排列 II
 重复元素的集合的全排列
@@ -44,4 +101,37 @@ Date: 2024-10-24
 前一个元素如果没被选取，说明**它不是上一个树叉的元素，也就意味着它在同一层已经被选过了**
 ### 代码
 ～～～c++
+class Solution {
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+public:
+    void traverse(vector<int>& nums, vector<bool>& used) {
+        if (path.size() == nums.size()) {
+            res.push_back(path);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
+                continue;
+            }
+            if (!used[i]) {
+                path.push_back(nums[i]);
+                used[i] = true;
+                traverse(nums, used);
+                used[i] = false;
+                path.pop_back(); 
+            }
+        }
+        return;
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        res.clear();
+        path.clear();
+        vector<bool> used(nums.size(), false);
+        sort(nums.begin(), nums.end());
+        traverse(nums, used);
+        return res;
+    }
+};
 ～～～
