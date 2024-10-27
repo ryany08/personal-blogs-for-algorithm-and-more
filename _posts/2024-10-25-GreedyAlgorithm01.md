@@ -15,8 +15,31 @@ Date: 2024-10-25
 本题的是某块饼干分给某个孩子，本题的子问题不会重复是因为每块饼干只会被分给一个孩子，每个孩子也只会得到最多一块饼干。\
 全局最优解就是这块饼干在满足孩子胃口的条件下会尽可能剩下最少的残渣，如果剩下的残渣很多，这些饼干可以重新分配，到达分配给更多人的目的。
 ### 代码
-～～～C++
-～～～
+~~~C++
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        auto cmp = [](int a, int b) -> bool {
+            return a < b;
+        };
+        sort(g.begin(), g.end(), cmp);
+        sort(s.begin(), s.end(), cmp);
+        int res = 0;
+        int i = 0, j = 0;
+        while (i < g.size() && j < s.size()) {
+            if (s[j] >= g[i]) {
+                j++;
+                i++;
+                res++;
+            }
+            else {
+                j++;
+            }
+        }
+        return res;
+    }
+};
+~~~
 ## 376 摆动序列
 求一个序列中上下摆动的元素序列的长度最大值，这个序列**由非负整数组成**
 ### 链接
