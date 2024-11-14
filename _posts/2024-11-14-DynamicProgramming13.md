@@ -1,5 +1,5 @@
 ---
-Title: DynamicProgamming13
+Title: DynamicProgramming13
 Date: 2024-11-14
 ---
 # 算法训练营第四十六天 | 647. 回文子串 | 516.最长回文子序列
