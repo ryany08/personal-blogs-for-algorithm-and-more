@@ -1,5 +1,5 @@
 ---
-Title: DyanmicProgramming12
+Title: DynamicProgramming12
 Date: 2024-11-15
 ---
 # 算法训练营第四十五天 | 115 不同子序列 ｜ 583 两个字符串的删除操作 ｜ 72 编辑距离
