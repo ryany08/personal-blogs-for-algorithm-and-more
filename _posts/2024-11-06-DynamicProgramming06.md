@@ -1,6 +1,6 @@
 ---
-Title：DynamicProgramming06
-Date： 2024-11-06
+Title: DynamicProgramming06
+Date: 2024-11-06
 ---
 # 算法训练营第三十八天 | 322. 零钱兑换 |  279.完全平方数 | 139.单词拆分 
 ## 322 零钱兑换
