@@ -1,5 +1,5 @@
 ---
-Title: DynamicPrgramming09
+Title: DynamicPrgramming10
 Date: 2024-11-09
 ---
 # 算法训练营第四十二天 |  300.最长递增子序列 |  674. 最长连续递增序列 |  718. 最长重复子数组 
