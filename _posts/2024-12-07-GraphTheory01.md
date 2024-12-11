@@ -54,7 +54,7 @@ void dfs(vector<vector<int>>& graph, int node, vector<int>& visited, vector<int>
     visited[node] = 1;
     path.push_back(node);
     for(int i = 0; i < N; i++) {
-        if (graph[node][i] != 0 && visited[i] == 0 ) {
+        if (graph[node][i] != 0 && visited[i] == 0) {
             dfs(graph, i, visited, path);
         } 
     }
