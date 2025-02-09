@@ -20,7 +20,6 @@ DFS有两种写法，一是不管条件，每次遇到一个节点就放入dfs�
 #include<vector>
 using namespace std;
 
-
 int directions[4][2] = { 1, 0, 0, 1, -1, 0, 0, -1 };
 
 void dfs(vector<vector<int>>& graph, vector<vector<int>>& visited, int row, int col) {
@@ -62,4 +61,63 @@ int main() {
 ~~~
 ## 100. 岛屿的最大面积
 给定一个由 1（陆地）和 0（水）组成的矩阵，计算岛屿的最大面积。岛屿面积的计算方式为组成岛屿的陆地的总数。岛屿由水平方向或垂直方向上相邻的陆地连接而成，并且四周都是水域。你可以假设矩阵外均被水包围
-### guan
+### 难点
+和计算岛屿的数量的题目类似。本题只需要在前一题的基础上修改累计逻辑即可。\
+此时的累计逻辑为：每个元素访问时，不管具体的元素值的大小，都设一个值result为0，记录从这个元素开始的可能的岛屿的面积。就算这个元素非陆地或是已被访问过也无妨。因为dfs中有一重逻辑会将这些情况排除\
+每次dfs计算完毕，result就会记录这个岛屿的面积。此时只需要和目前的最大岛屿面积比较即可。
+### 代码
+~~~c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+
+int direction[4][2] = {0, -1, 1, 0, 0, 1, -1, 0};
+// for saving storage, use &
+void dfs(vector<vector<int>>& graph, vector<vector<bool>>& visited, int row, int col, int& result) {
+    int n = graph.size(); // row number
+    int m = graph[0].size(); // col number
+    if (visited[row][col] || graph[row][col] == 0) {
+        return;
+    }
+    visited[row][col] = true;
+    result += 1;
+    for(int i = 0;i < 4; i++) {
+        int next_row = row + direction[i][1];
+        int next_col = col + direction[i][0];
+        if ((next_row >= n) || (next_row < 0) || (next_col < 0) || (next_col >= m)) {
+            continue;
+        }
+        dfs(graph, visited, next_row, next_col, result);
+    }
+
+}
+
+int main(){
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> grid(n, vector<int>(m, 0));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> grid[i][j];
+        }
+    }
+    
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+    
+    int results = 0; // the number of islands
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int result = 0;
+            dfs(grid, visited, i, j, result); // 将与其链接的陆地都标记上 true
+            results = results > result ? results : result;                    
+        }
+            
+    }
+    cout<<results<<endl;
+    return  0;
+}
+~~~
+### 思考
+本题仅将判断岛屿的逻辑放到了dfs函数中。另一种则是在外侧直接判断岛屿。\
+比较需要注意的点为：1、参数使用引用，节约内存，否则每次递归调用都需要额外开辟内存；2、注意row和col的顺序，方向的改变。
