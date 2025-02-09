@@ -59,6 +59,28 @@ int main() {
     return 0;
 }
 ~~~
+### 思考
+记录一个dfs的模板
+~~~c++
+int direction[4][2] = {0, -1, 1, 0, 0, 1, -1, 0};
+void dfs(vector<vector<int>>& graph, vector<vector<int>>& visited, int row, int col) {
+    int m = graph.size();
+    int n = graph[0].size();
+    if (visited[row][col]) {
+        return;
+    }
+    visited[row][col] = true;
+    for(int i = 0;i < 4; i++) {
+        int next_row = row + direction[i][0];
+        int next_col = col + direction[i][1];
+        if ((next_row >= n) || (next_row < 0) || (next_col < 0) || (next_col >= m)) {
+            continue;
+        }
+        dfs(graph, visited, next_row, next_col);
+    }
+}
+~~~
+本模板可以**用于四个方向**的深度搜索
 ## 100. 岛屿的最大面积
 给定一个由 1（陆地）和 0（水）组成的矩阵，计算岛屿的最大面积。岛屿面积的计算方式为组成岛屿的陆地的总数。岛屿由水平方向或垂直方向上相邻的陆地连接而成，并且四周都是水域。你可以假设矩阵外均被水包围
 ### 难点
