@@ -120,7 +120,7 @@ void getRemoveEdge(const vector<vector<int>>& edges) {
 bool isTreeAfterRemoveEdge(const vector<vector<int>>& edges, int deleteEdge) {
     init(); // 初始化并查集
     for (int i = 0; i < n; i++) {
-        if (i == deleteEdge) continue;
+        if (i == deleteEdge) continue; // 并不是真正删除这条边，而是跳过了这条边
         if (same(edges[i][0], edges[i][1])) { // 构成有向环了，一定不是树
             return false;
         }
