@@ -1,6 +1,6 @@
 ---
 Title：GraphTheory09
-Date：2025-2-25
+Date：2025-02-25
 ---
 # 算法随想录 | Dijaskal算法堆优化 | Bellman-Ford算法
 ## Dijskal算法堆优化
