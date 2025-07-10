@@ -4,7 +4,7 @@ Date: 2025-06-28
 ---
 # C, D, E
 ## C
-给定一个序列，维持最左侧和最右侧的数不变，中间部分的数保留最少的个数，使最后的数列满足：S(i+1) <= 2 * S(i)
+给定一个序列，维持最左侧和最右侧的数不变，对中间部分的数保留最少的个数，使最后的数列满足：S(i+1) <= 2 * S(i)，也就是右边的多米诺满足一定的条件，即小于左边多米诺的两倍
 输入格式为：N（case个数）
           S1
           。。。
@@ -61,3 +61,63 @@ int main() {
 ~~~
 ### 总结
 相比普通贪心更难的题目，核心在于理解条件和越少越好的要求。
+## E
+有LCM sequence
+LCMsequence指的是An = 1到n之间n个数的最小公倍数。\
+求给定区间内不同的LCM sequence 个数
+例如：在4到12之间，有
+A4=12
+A5=60
+A6=60
+A7=420
+A8=840
+A9=2520
+A10=2520
+A11=27720
+A12=27720，
+这9个数中一共有6个不同的个LCMsequence，因此结果为6
+### 解题思路
+完全不会
+按照题解是求出左范围L + 1到右范围R之间的所有素数幂，素数幂指的是单一的素数的幂。4，5，7等都是。因此只要想到要求素数幂就能解开本题。但是怎么求？怎么想到的？\
+按照解说视频，是通过induction，但是并没有给出证明\
+### 代码
+~~~C++
+#include <cmath>
+#include <iostream>
+#include <vector>
+using namespace std;
+vector<int> prime_enumerate(int N) {
+  vector<bool> is_prime(N + 1, true);
+  vector<int> primes;
+  if (N < 2) return primes;
+  is_prime[0] = is_prime[1] = false;
+  for (int i = 2; i * i <= N; ++i) {
+    if (is_prime[i]) {
+      for (int j = i * i; j <= N; j += i) is_prime[j] = false;
+    }
+  }
+  for (int i = 2; i <= N; ++i) {
+    if (is_prime[i]) primes.push_back(i);
+  }
+  return primes;
+}
+int main() {
+  long long L, R;
+  cin >> L >> R;
+  vector<int> vis(R - L);
+  int ans = 1;
+  for (int p : prime_enumerate(sqrt(R) + 100)) {
+    for (long long x = (L / p + 1) * p; x <= R; x += p) {
+      if (vis[x - (L + 1)]) continue;
+      vis[x - (L + 1)] = 1;
+      long long y = x;
+      while (y % p == 0) y /= p;
+      if (y == 1) ans++;
+    }
+  }
+  for (int v : vis) ans += v == 0;
+  cout << ans << "\n";
+}
+~~~
+### 总结
+完全不理解，需要时间消化
