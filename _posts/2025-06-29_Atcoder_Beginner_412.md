@@ -29,23 +29,23 @@ void solve() {
   int N;
   cin >> N;
   vector<int> A(N);
-  for (auto& a : A) cin >> a;
+  for (auto& a : A) cin >> a;//无引用无法赋值
   vector<int> used(N);
-  int ans = 1, last = 0;
+  int ans = 1, last = 0; // ans为最终结果，last为当前比较的数的下标
   while (true) {
-    if (A[last] * 2 >= A[N - 1]) {
+    if (A[last] * 2 >= A[N - 1]) { //固定与最后一个数进行比较，因为最后一个数和最初的一个数需要被保留
       ans += 1;
       break;
     }
-    int nxt = -1;
+    int nxt = -1; // nxt，用于标记当前候选的数
     for (int i = 1; i <= N - 1; i++) {
-      if (used[i]) continue;
-      if (A[last] * 2 >= A[i]) { // 是否满足条件
-        if (nxt != -1 && A[nxt] >= A[i]) continue; // 找到较大的一个满足条件的值， 与A[last]比较
+      if (used[i]) continue; // 
+      if (A[last] * 2 >= A[i]) { // 是否满足多米诺条件，只有满足多米诺条件才会向后走，last从0开始，是因为下标为0，即第一个数必须进行比较和保留
+        if (nxt != -1 && A[nxt] >= A[i]) continue; // 找到较大的一个满足条件的值， 因为我们要求空间内尽可能少的数，则数一定要尽可能大
         nxt = i;
       }
     }
-    if (nxt == -1 || A[nxt] <= A[last]) { // 找到的值一定要比比较的值大
+    if (nxt == -1 || A[nxt] <= A[last]) { // 找到的值一定要比比较的值大，如果找到的数甚至比前一个小，那就说明这个数有无法将最后一个多米诺推倒，因为last标记的数已经无法将最后一个多米诺。而如果想要让选中的数最终将最后一个多米诺推倒，选中的多米诺之后一定会再选中比当前的多米诺更高的数，何不选这个更高的呢？
       cout << -1 << endl;
       return;
     }
